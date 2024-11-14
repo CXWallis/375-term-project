@@ -1,3 +1,4 @@
+#include "optimizer.h"
 #include "parser.h"
 
 int main(int argc, char **argv) {
@@ -13,6 +14,8 @@ int main(int argc, char **argv) {
   }
 
   Line *lines = parse(input);
+
+  optimize(lines);
 
   FILE *output = fopen(argv[2], "w");
   if (!output) {

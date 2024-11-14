@@ -2,6 +2,7 @@
 #define PARSER_H
 
 #include <stdio.h>
+
 typedef struct expr {
   enum { Int, Var, Op } type;
   union {
