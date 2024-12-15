@@ -1,5 +1,6 @@
 #include "optimizer.h"
 #include "parser.h"
+#include <time.h>
 
 int main(int argc, char **argv) {
   if (argc < 3) {
@@ -15,7 +16,13 @@ int main(int argc, char **argv) {
 
   Line *lines = parse(input);
 
+  clock_t start = clock();
+
   lines = optimize(lines);
+
+  clock_t end = clock();
+
+  printf("Optimization time: %f\n", (double)(end - start) / CLOCKS_PER_SEC);
 
   FILE *output = fopen(argv[2], "w");
   if (!output) {
