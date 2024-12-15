@@ -11,9 +11,12 @@ Expr *find(Expr *expr, Line *lines) {
   case Int:
     return expr;
   case Var:
+    if (expr->forward)
+      return find(expr->forward, lines);
     for (Line *line = lines; line; line = line->next) {
       if (line->var && line->expr && !strcmp(line->var, expr->value.v)) {
-        return line->expr;
+        expr->forward = find(line->expr, lines);
+        return expr->forward;
       }
     }
   case Op:
@@ -82,22 +85,24 @@ Line *optimize(Line *lines) {
       if (argl->type == Int && argr->type == Int) {
         ssize_t left = argl->value.i;
         ssize_t right = argr->value.i;
+        Expr *i = malloc(sizeof(*i));
+        i->type = Int;
         switch (line->expr->value.op->op) {
         case '+':
-          unionize(line->expr, &(Expr){.type = Int, .value.i = left + right},
-                   lines);
+          i->value.i = left + right;
+          unionize(line->expr, i, lines);
           break;
         case '-':
-          unionize(line->expr, &(Expr){.type = Int, .value.i = left - right},
-                   lines);
+          i->value.i = left - right;
+          unionize(line->expr, i, lines);
           break;
         case '*':
-          unionize(line->expr, &(Expr){.type = Int, .value.i = left * right},
-                   lines);
+          i->value.i = left * right;
+          unionize(line->expr, i, lines);
           break;
         case '/':
-          unionize(line->expr, &(Expr){.type = Int, .value.i = left / right},
-                   lines);
+          i->value.i = left / right;
+          unionize(line->expr, i, lines);
           break;
         }
         continue;
@@ -114,9 +119,13 @@ Line *optimize(Line *lines) {
         case '+':
           unionize(line->expr, argr, lines);
           break;
-        case '*':
-          unionize(line->expr, &(Expr){.type = Int, .value.i = 0}, lines);
+        case '*': {
+          Expr *zero = malloc(sizeof(*zero));
+          zero->type = Int;
+          zero->value.i = 0;
+          unionize(line->expr, zero, lines);
           break;
+        }
         }
         continue;
       }
@@ -127,9 +136,13 @@ Line *optimize(Line *lines) {
         case '+':
           unionize(line->expr, argl, lines);
           break;
-        case '*':
-          unionize(line->expr, &(Expr){.type = Int, .value.i = 0}, lines);
+        case '*': {
+          Expr *zero = malloc(sizeof(*zero));
+          zero->type = Int;
+          zero->value.i = 0;
+          unionize(line->expr, zero, lines);
           break;
+        }
         }
         continue;
       }
