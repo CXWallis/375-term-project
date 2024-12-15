@@ -10,10 +10,11 @@ typedef struct expr {
     char *v;
     struct {
       char op;
-      struct expr *lhs;
-      struct expr *rhs;
+      struct expr *larg;
+      struct expr *rarg;
     } *op;
   } value;
+  struct expr *forward;
 } Expr;
 
 typedef struct line {

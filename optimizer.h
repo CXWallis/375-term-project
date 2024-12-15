@@ -3,6 +3,6 @@
 
 #include "parser.h"
 
-void optimize(Line *lines);
+Line *optimize(Line *lines);
 
 #endif // OPTIMIZER_H

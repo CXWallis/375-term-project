@@ -39,6 +39,7 @@ Expr *parseSimpleExpr(Parser *parser) {
   }
 
   Expr *expr = malloc(sizeof(*expr));
+  expr->forward = 0;
 
   if (isdigit(parser->line[parser->pos])) {
     expr->type = Int;
@@ -62,6 +63,7 @@ Expr *parseExpr(Parser *parser) {
   }
 
   Expr *expr = malloc(sizeof(*expr));
+  expr->forward = 0;
 
   if (isdigit(parser->line[parser->pos])) {
     expr->type = Int;
@@ -84,9 +86,9 @@ Expr *parseExpr(Parser *parser) {
     expr->value.op = malloc(sizeof(*expr->value.op));
     expr->value.op->op = parser->line[parser->pos];
     parser->pos += 1;
-    expr->value.op->lhs = parseSimpleExpr(parser);
-    expr->value.op->rhs = parseSimpleExpr(parser);
-    if (!expr->value.op->lhs || !expr->value.op->rhs) {
+    expr->value.op->larg = parseSimpleExpr(parser);
+    expr->value.op->rarg = parseSimpleExpr(parser);
+    if (!expr->value.op->larg || !expr->value.op->rarg) {
       return 0;
     }
     return expr;
@@ -130,9 +132,9 @@ void fprintExpr(FILE *out, Expr *expr) {
     break;
   case Op:
     fprintf(out, "%c ", expr->value.op->op);
-    fprintExpr(out, expr->value.op->lhs);
+    fprintExpr(out, expr->value.op->larg);
     fprintf(out, " ");
-    fprintExpr(out, expr->value.op->rhs);
+    fprintExpr(out, expr->value.op->rarg);
     break;
   }
 }

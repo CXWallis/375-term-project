@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
 
   Line *lines = parse(input);
 
-  optimize(lines);
+  lines = optimize(lines);
 
   FILE *output = fopen(argv[2], "w");
   if (!output) {
@@ -27,6 +27,8 @@ int main(int argc, char **argv) {
 
   fclose(input);
   fclose(output);
+
+  // No memory deallocation, OS is the best Garbage Collector
 
   return 0;
 }
