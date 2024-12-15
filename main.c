@@ -29,6 +29,6 @@ int main(int argc, char **argv) {
   fclose(output);
 
   // No memory deallocation, OS is the best Garbage Collector
-
+  // -- i laughed so fucking hard at this this is so real
   return 0;
 }
