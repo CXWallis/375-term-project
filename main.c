@@ -1,5 +1,8 @@
 #include "optimizer.h"
 #include "parser.h"
+#include "bruteforce.h"
+
+
 
 int main(int argc, char **argv) {
   if (argc < 3) {
@@ -14,6 +17,9 @@ int main(int argc, char **argv) {
   }
 
   Line *lines = parse(input);
+
+    
+  (void)bruteforce( lines );
 
   lines = optimize(lines);
 

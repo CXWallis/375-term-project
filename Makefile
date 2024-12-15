@@ -13,7 +13,7 @@ test: main
 	cat output
 
 main: 
-	$(CC) $(CFLAGS) main.c parser.c optimizer.c -o main
+	$(CC) $(CFLAGS) main.c parser.c optimizer.c bruteforce.c -o main
 
 
 clean:
