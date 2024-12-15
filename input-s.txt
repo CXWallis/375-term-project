@@ -1,0 +1,51 @@
+A 5
+B 7
+C 5
+D 3
+E 6
+F 7
+G 9
+H 2
+I 0
+J 8
+K 7
+L 2
+M 7
+N 5
+O 1
+P 3
+Q 3
+S 6
+T 6
+U 1
+V 7
+W 8
+X 2
+Y 8
+Z 3
+AZ - D Y
+BY + Y H
+CX * O I
+DW / H F
+EV - L D
+FU + W I
+GT / J N
+HS - H K
+IQ + S I
+JP / C L
+KO + T O
+LN + S F
+MM / A W
+NL / J Q
+OK + I Q
+PJ + T J
+QI - W L
+SH / Q Q
+TG / N V
+UF + M M
+VE / G D
+WD * H F
+XC * Q Y
+YB * S O
+ZA * O P
+R LN

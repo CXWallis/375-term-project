@@ -101,6 +101,13 @@ Line *optimize(Line *lines) {
           unionize(line->expr, i, lines);
           break;
         case '/':
+          if (right == 0) {
+            Expr *zero = malloc(sizeof(*zero));
+            zero->type = Int;
+            zero->value.i = 0;
+            unionize(line->expr, zero, lines);
+            break;
+          }
           i->value.i = left / right;
           unionize(line->expr, i, lines);
           break;
@@ -156,7 +163,13 @@ Line *optimize(Line *lines) {
   Line *new_line = malloc(sizeof(*new_line));
   new_line->var = line->var;
   new_line->expr = find(line->expr, lines);
-  new_line->next = new_lines;
-  new_lines = new_line;
+  new_line->next = 0;
+  if (!new_lines)
+    return new_line;
+  Line *tail = new_lines;
+  while (tail->next) {
+    tail = tail->next;
+  }
+  tail->next = new_line;
   return new_lines;
 }
